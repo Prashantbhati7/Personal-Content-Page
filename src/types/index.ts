@@ -1,4 +1,4 @@
-export type BlockType = "text" | "image" | "header";
+export type BlockType = "text" | "image" | "header" | "markdown" | "rich-text";
 
 export type Block = {
   id: string;

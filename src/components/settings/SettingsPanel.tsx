@@ -38,18 +38,27 @@ export const SettingsPanel = () => {
 const Configurator = ({ block, onChange }: { block: Block; onChange: (key: string, value: any) => void }) => {
   switch (block.type) {
     case "text":
+    case "markdown":
+    case "rich-text":
       return (
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="content">Text Content</Label>
+            <Label htmlFor="content">
+              {block.type === "markdown" ? "Markdown Content" : block.type === "rich-text" ? "HTML Content" : "Text Content"}
+            </Label>
             <Textarea
               id="content"
               value={block.props.content || ""}
               onChange={(e) => onChange("content", e.target.value)}
-              placeholder="Write some text..."
-              className="min-h-[150px]"
+              placeholder={block.type === "markdown" ? "# Title\n\nContent..." : block.type === "rich-text" ? "<div>Formatting here...</div>" : "Write some text..."}
+              className="min-h-[200px] font-mono text-sm"
             />
           </div>
+          {block.type === "rich-text" && (
+            <p className="text-[10px] text-muted-foreground italic">
+              Note: You can use HTML tags for formatting in this block.
+            </p>
+          )}
         </div>
       );
 
